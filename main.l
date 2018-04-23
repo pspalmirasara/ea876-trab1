@@ -48,6 +48,37 @@ void retirar_maiorque_e_menorque(char *entrada, char *saida, int numeroDeTags){
 	return;
 }
 
+void converteCodigoEmMunicipio(char *codigo, char *palavra) {
+	if(strcmp(codigo, "3302007") == 0) {
+		strcpy(palavra, "Itaguaí");
+	}
+	else if(strcmp(codigo, "1502152") == 0){
+	  strcpy(palavra, "Canaã dos Carajás");
+	}
+	else if(strcmp(codigo, "1504208") == 0){
+	  strcpy(palavra, "Marabá");
+	}
+	else if(strcmp(codigo, "1505437") == 0){
+	  strcpy(palavra, "Ourilândia do Norte");
+	}
+	else if(strcmp(codigo, "1505536") == 0){
+	  strcpy(palavra, "Parauapebas");
+	}
+	else if(strcmp(codigo, "2111300") == 0){
+	  strcpy(palavra, "São Luís");
+	}
+	else if(strcmp(codigo, "3106200") == 0){
+	  strcpy(palavra, "Belo Horizonte");
+	}
+	else if(strcmp(codigo, "3144805") == 0){
+	  strcpy(palavra, "Nova Lima");
+	}
+	else if(strcmp(codigo, "3304557") == 0){
+	  strcpy(palavra, "Rio de Janeiro");
+	}
+
+
+}
 
 %}
 
@@ -84,18 +115,21 @@ EMAIL [a-zA-Z0-9.]*@[a-zA-Z0-9.]*
 
 (<CodigoMunicipio>{NUMERO}<\/CodigoMunicipio><Uf>{PALAVRA}<\/Uf><Cep>{NUMERO}<\/Cep><\/Endereco><Contato><Email>{EMAIL}<\/Email><\/Contato><\/TomadorServico>) { //RIO DE JANEIRO 1
 	retirar_maiorque_e_menorque(yytext, nova_str, 1);
+	converteCodigoEmMunicipio(nova_str, nova_str);
 	yylval.string=strdup(nova_str);
 	return CIDADE_TOMADOR;
 }
 
 (<CodigoMunicipio>{NUMERO}<\/CodigoMunicipio><Uf>{PALAVRA}<\/Uf><Cep>{NUMERO}<\/Cep><\/Endereco><Contato><Telefone>{NUMERO}<\/Telefone><Email>{EMAIL}<\/Email><\/Contato><\/TomadorServico>) { //RIO DE JANEIRO 2
 	retirar_maiorque_e_menorque(yytext, nova_str, 1);
+	converteCodigoEmMunicipio(nova_str, nova_str);
 	yylval.string=strdup(nova_str);
 	return CIDADE_TOMADOR;
 }
 
 (<CodigoMunicipio>{NUMERO}<\/CodigoMunicipio><Uf>{PALAVRA}<\/Uf><Cep>{NUMERO}<\/Cep><\/Endereco><\/TomadorServico>) { //RIO DE JANEIRO 3
 	retirar_maiorque_e_menorque(yytext, nova_str, 1);
+	converteCodigoEmMunicipio(nova_str, nova_str);
 	yylval.string=strdup(nova_str);
 	return CIDADE_TOMADOR;
 }
@@ -115,24 +149,27 @@ EMAIL [a-zA-Z0-9.]*@[a-zA-Z0-9.]*
 
 (<CodigoMunicipio>{NUMERO}<\/CodigoMunicipio><Uf>{PALAVRA}<\/Uf><Cep>{NUMERO}<\/Cep><\/Endereco><Contato><Telefone>{NUMERO}<\/Telefone><Email>{EMAIL}<\/Email><\/Contato><\/PrestadorServico>) { //JOAO MOLENVADE
 	retirar_maiorque_e_menorque(yytext, nova_str, 1);
+	converteCodigoEmMunicipio(nova_str, nova_str);
 	yylval.string=strdup(nova_str);
 	return CIDADE_PRESTADOR;
 }
 
-(<CodigoMunicipio>{NUMERO}<\/CodigoMunicipio><Uf>{PALAVRA}<\/Uf><Cep>{NUMERO}<\/Cep><\/Endereco><Contato><Telefone>{NUMERO}<\/Telefone><\/Contato><\/PrestadorServico>) { //RIO DE JANEIRO 1 
+(<CodigoMunicipio>{NUMERO}<\/CodigoMunicipio><Uf>{PALAVRA}<\/Uf><Cep>{NUMERO}<\/Cep><\/Endereco><Contato><Telefone>{NUMERO}<\/Telefone><\/Contato><\/PrestadorServico>) { //RIO DE JANEIRO 1
 	retirar_maiorque_e_menorque(yytext, nova_str, 1);
+	converteCodigoEmMunicipio(nova_str, nova_str);
 	yylval.string=strdup(nova_str);
 	return CIDADE_PRESTADOR;
 }
 
-(<CodigoMunicipio>{NUMERO}<\/CodigoMunicipio><Uf>{PALAVRA}<\/Uf><\/Endereco><Contato><Telefone>{NUMERO}<\/Telefone><Email>n{EMAIL}<\/Email><\/Contato><\/PrestadorServico>) { //RIO DE JANEIRO 2 
+(<CodigoMunicipio>{NUMERO}<\/CodigoMunicipio><Uf>{PALAVRA}<\/Uf><\/Endereco><Contato><Telefone>{NUMERO}<\/Telefone><Email>n{EMAIL}<\/Email><\/Contato><\/PrestadorServico>) { //RIO DE JANEIRO 2
 	retirar_maiorque_e_menorque(yytext, nova_str, 1);
+	converteCodigoEmMunicipio(nova_str, nova_str);
 	yylval.string=strdup(nova_str);
 	return CIDADE_PRESTADOR;
 }
 
 
-(<tsMunSvc>{PALAVRA}<\/tsMunSvc>) { //PARAUPEBAS 
+(<tsMunSvc>{PALAVRA}<\/tsMunSvc>) { //PARAUPEBAS
 	retirar_maiorque_e_menorque(yytext, nova_str, 1);
 	yylval.string=strdup(nova_str);
 	return CIDADE_PRESTADOR;
