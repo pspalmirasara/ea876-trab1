@@ -49,33 +49,49 @@ void retirar_maiorque_e_menorque(char *entrada, char *saida, int numeroDeTags){
 }
 
 void converteCodigoEmMunicipio(char *codigo, char *palavra) {
-	if(strcmp(codigo, "3302007") == 0) {
-		strcpy(palavra, "Itaguaí");
-	}
-	else if(strcmp(codigo, "1502152") == 0){
-	  strcpy(palavra, "Canaã dos Carajás");
+	if(strcmp(codigo, "1502152") == 0){
+	  strcpy(palavra, "CANAA DOS CARAJAS");
 	}
 	else if(strcmp(codigo, "1504208") == 0){
-	  strcpy(palavra, "Marabá");
+	  strcpy(palavra, "MARABA");
 	}
 	else if(strcmp(codigo, "1505437") == 0){
-	  strcpy(palavra, "Ourilândia do Norte");
+	  strcpy(palavra, "OURILANDIA DO NORTE");
 	}
 	else if(strcmp(codigo, "1505536") == 0){
-	  strcpy(palavra, "Parauapebas");
+	  strcpy(palavra, "PARAUAPEBAS");
 	}
 	else if(strcmp(codigo, "2111300") == 0){
-	  strcpy(palavra, "São Luís");
+	  strcpy(palavra, "SÃO LUIS");
 	}
 	else if(strcmp(codigo, "3106200") == 0){
-	  strcpy(palavra, "Belo Horizonte");
+	  strcpy(palavra, "BELO HORIZONTE");
+	}
+	else if(strcmp(codigo, "3127701") == 0){
+		strcpy(palavra, "GOVERNADOR VALADARES");
+	}
+	else if(strcmp(codigo, "3131703") == 0){
+	  strcpy(palavra, "ITABIRA");
+	}
+	else if(strcmp(codigo, "3136207") == 0) {
+		strcpy(palavra, "JOAO MONLEVADE");
 	}
 	else if(strcmp(codigo, "3144805") == 0){
-	  strcpy(palavra, "Nova Lima");
+	  strcpy(palavra, "NOVA LIMA");
+	}
+	else if(strcmp(codigo, "3205309") == 0){
+	  strcpy(palavra, "VITORIA");
+	}
+	else if(strcmp(codigo, "3302007") == 0) {
+		strcpy(palavra, "ITAGUAI");
 	}
 	else if(strcmp(codigo, "3304557") == 0){
-	  strcpy(palavra, "Rio de Janeiro");
+	  strcpy(palavra, "RIO DE JANEIRO");
 	}
+	else if(strcmp(codigo, "5003207") == 0){
+	  strcpy(palavra, "CORUMBA");
+	}
+
 
 
 }
@@ -96,18 +112,21 @@ EMAIL [a-zA-Z0-9.]*@[a-zA-Z0-9.]*
 
 (<ns3:OrgaoGerador>[ \t\r\n]+<ns3:CodigoMunicipio>{NUMERO}<\/ns3:CodigoMunicipio>) { //CORUMBÁ
 	retirar_maiorque_e_menorque(yytext, nova_str, 2);
+	converteCodigoEmMunicipio(nova_str, nova_str);
 	yylval.string=strdup(nova_str);
 	return CIDADE_TOMADOR;
 }
 
 (<CodigoMunicipio>{NUMERO}<\/CodigoMunicipio><Uf>{PALAVRA}<\/Uf><Cep>{NUMERO}<\/Cep><\/Endereco><Contato><Telefone>{NUMERO}<\/Telefone><Email>{EMAIL}<\/Email><\/Contato><\/Tomador>) { //JOAO MOLENVADE_1
 	retirar_maiorque_e_menorque(yytext, nova_str, 1);
+	converteCodigoEmMunicipio(nova_str, nova_str);
 	yylval.string=strdup(nova_str);
 	return CIDADE_TOMADOR;
 }
 
 (<CodigoMunicipio>{NUMERO}<\/CodigoMunicipio><Uf>{PALAVRA}<\/Uf><Cep>{NUMERO}<\/Cep><\/Endereco><Contato><Telefone>{NUMERO}<\/Telefone><\/Contato><\/Tomador>) { //JOAO MOLENVADE_2
 	retirar_maiorque_e_menorque(yytext, nova_str, 1);
+	converteCodigoEmMunicipio(nova_str, nova_str);
 	yylval.string=strdup(nova_str);
 	return CIDADE_TOMADOR;
 }
@@ -171,6 +190,7 @@ EMAIL [a-zA-Z0-9.]*@[a-zA-Z0-9.]*
 
 (<tsMunSvc>{PALAVRA}<\/tsMunSvc>) { //PARAUPEBAS
 	retirar_maiorque_e_menorque(yytext, nova_str, 1);
+	converteCodigoEmMunicipio(nova_str, nova_str);
 	yylval.string=strdup(nova_str);
 	return CIDADE_PRESTADOR;
 }
